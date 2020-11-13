@@ -1235,6 +1235,37 @@ class Dash(Coin):
         import x11_hash
         return x11_hash.getPoWHash(header)
 
+# Source: https://github.com/pyrkcommunity/pyrk/blob/master/src/chainparams.cpp
+class Pyrk(Coin):
+    NAME = "Pyrk"
+    SHORTNAME = "PYRK"
+    NET = "mainnet"
+    XPUB_VERBYTES = bytes.fromhex("0488b21e")
+    XPRV_VERBYTES = bytes.fromhex("0488ade4")
+    GENESIS_HASH = ('973814a07c1ae4f3af90372952c9b970'
+                    '9901a95df1d0ea54bd1b3bd6feff5b89')
+    P2PKH_VERBYTE = bytes.fromhex("37") # From base58Prefixes[PUBKEY_ADDRESS] in chainparams.cpp converting decimal to hex
+    P2SH_VERBYTES = [bytes.fromhex("10")] # From base58Prefixes[SCRIPT_ADDRESS] in chainparams.cpp converting decimal to HEX
+    WIF_BYTE = bytes.fromhex("b7") # From base58Prefixes[SECRET_KEY] in chainparams.cpp converting decimal to HEX
+    # Source https://github.com/kyuupichan/electrumx/issues/190 can be taken from blockchain at any reasonable height
+    TX_COUNT_HEIGHT = 155498
+    TX_COUNT = 215741
+    TX_PER_BLOCK = 4
+    PEER_DEFAULT_PORTS = {'t': '8118', 's': '8119'}
+    RPC_PORT = 8117
+    PEERS = [
+    ]
+    SESSIONCLS = DashElectrumX
+    DAEMON = daemon.DashDaemon
+    DESERIALIZER = lib_tx_dash.DeserializerDash
+
+    @classmethod
+    def header_hash(cls, header):
+        '''Given a header return hash'''
+        return double_sha256(header)
+
+
+ 
 
 class DashTestnet(Dash):
     SHORTNAME = "tDASH"
