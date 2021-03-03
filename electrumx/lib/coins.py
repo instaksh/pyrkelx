@@ -1846,8 +1846,8 @@ class TokenPay(ScryptMixin, Coin):
         "electrum-eu.tpay.ai s",
     ]
     
-    
-NAME = "Crown"
+class Crown(AuxPowMixin, Coin):
+    NAME = "Crown"
     SHORTNAME = "CRW"
     NET = "mainnet"
     XPUB_VERBYTES = bytes.fromhex("0488b21e")
