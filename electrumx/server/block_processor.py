@@ -823,7 +823,7 @@ class LTORBlockProcessor(BlockProcessor):
 
         assert n == len(undo_info)
 
-        # Remove tx outputs made in this block, by spending them.
+          # Remove tx outputs made in this block, by spending them.
         for tx, tx_hash in txs:
             for idx, txout in enumerate(tx.outputs):
                 # Spend the TX outputs.  Be careful with unspendable
@@ -832,8 +832,11 @@ class LTORBlockProcessor(BlockProcessor):
                     continue
 
                 # Get the hashX
-                hashX = script_hashX(txout.script)
-                cache_value = spend_utxo(tx_hash, idx)
-                add_touched(cache_value[:-13])
+                try:
+                    hashX = script_hashX(txout.script)
+                    cache_value = spend_utxo(tx_hash, idx)
+                    add_touched(cache_value[:-13])
+                except:
+                    print (str(txout), ' has bad outputs')
 
         self.tx_count -= len(txs)
