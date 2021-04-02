@@ -2978,62 +2978,13 @@ class SmartCash(Coin):
                            hash_fn=lib_tx.DeserializerSmartCash.keccak)
     HEADER_HASH = lib_tx.DeserializerSmartCash.keccak
     DAEMON = daemon.SmartCashDaemon
-    SESSIONCLS = SmartCashElectrumX
-
-    def is_pay_to_public_key_hash_locked(script):
-        if len(script) < 29 or len(script) > 33:
-            return False
-
-        lock_time_length = script[0]
-        offset = lock_time_length + 1
-        return ((lock_time_length >= 1) and (lock_time_length <= 5) and
-                (script[offset + 0] == OpCodes.OP_CHECKLOCKTIMEVERIFY) and
-                (script[offset + 1] == OpCodes.OP_DROP) and
-                (script[offset + 2] == OpCodes.OP_DUP) and
-                (script[offset + 3] == OpCodes.OP_HASH160) and
-                (script[offset + 4] == 0x14) and
-                (script[offset + 25] == OpCodes.OP_EQUALVERIFY) and
-                (script[offset + 26] == OpCodes.OP_CHECKSIG))
-
-    def is_pay_to_script_hash_locked(script):
-        if len(script) < 26 or len(script) > 31:
-            return False
-
-        lock_time_length = script[0]
-        offset = lock_time_length + 1
-        return ((lock_time_length >= 1) and (lock_time_length <= 5) and
-                (script[offset + 0] == OpCodes.OP_CHECKLOCKTIMEVERIFY) and
-                (script[offset + 1] == OpCodes.OP_DROP) and
-                (script[offset + 2] == OpCodes.OP_HASH160) and
-                (script[offset + 3] == 0x14) and
-                (script[offset + 24] == OpCodes.OP_EQUAL))
+    SESSIONCLS = SmartCashElectrumX  
 
     @classmethod
     def header_hash(cls, header):
         '''Given a header return the hash.'''
         return cls.HEADER_HASH(header)
-
-    @classmethod
-    def hashX_from_script(cls, script):
-        '''Returns a hashX from a script, or None if the script is provably
-        unspendable so the output can be dropped.
-        '''
-        if script and script[0] == OP_RETURN:
-            return None
-
-        # If script is time-locked, turn it into a regular script
-        # to make sure it has the same hashX of an unlocked Tx
-        # targeted to the same address
-        if cls.is_pay_to_public_key_hash_locked(script):
-            offset = script[0] + 6
-            pubkey = script[offset:offset+20]
-            script = ScriptPubKey.P2PKH_script(pubkey)
-        elif cls.is_pay_to_script_hash_locked(script):
-            offset = script[0] + 5
-            pubkey = script[offset:offset+20]
-            script = ScriptPubKey.P2SH_script(pubkey)
-
-        return sha256(script).digest()[:HASHX_LEN]
+   
 
 class NIX(Coin):
     NAME = "NIX"
