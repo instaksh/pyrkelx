@@ -3011,36 +3011,7 @@ class SmartCash(Coin):
     DAEMON = daemon.SmartCashDaemon
     SESSIONCLS = SmartCashElectrumX
     
-    @classmethod
-      def is_pay_to_public_key_hash_locked(script):
-        if len(script) < 29 or len(script) > 33:
-            return False
-
-        lock_time_length = script[0]
-        offset = lock_time_length + 1
-        return ((lock_time_length >= 1) and (lock_time_length <= 5) and
-                (script[offset + 0] == OpCodes.OP_CHECKLOCKTIMEVERIFY) and
-                (script[offset + 1] == OpCodes.OP_DROP) and
-                (script[offset + 2] == OpCodes.OP_DUP) and
-                (script[offset + 3] == OpCodes.OP_HASH160) and
-                (script[offset + 4] == 0x14) and
-                (script[offset + 25] == OpCodes.OP_EQUALVERIFY) and
-                (script[offset + 26] == OpCodes.OP_CHECKSIG))
     
-    @classmethod
-    def is_pay_to_script_hash_locked(script):
-        if len(script) < 26 or len(script) > 31:
-            return False
-
-        lock_time_length = script[0]
-        offset = lock_time_length + 1
-        return ((lock_time_length >= 1) and (lock_time_length <= 5) and
-                (script[offset + 0] == OpCodes.OP_CHECKLOCKTIMEVERIFY) and
-                (script[offset + 1] == OpCodes.OP_DROP) and
-                (script[offset + 2] == OpCodes.OP_HASH160) and
-                (script[offset + 3] == 0x14) and
-                (script[offset + 24] == OpCodes.OP_EQUAL))
-
     @classmethod
     def header_hash(cls, header):
         '''Given a header return the hash.'''
