@@ -3011,6 +3011,7 @@ class SmartCash(Coin):
     DAEMON = daemon.SmartCashDaemon
     SESSIONCLS = SmartCashElectrumX
     
+    @classmethod
       def is_pay_to_public_key_hash_locked(script):
         if len(script) < 29 or len(script) > 33:
             return False
@@ -3025,7 +3026,8 @@ class SmartCash(Coin):
                 (script[offset + 4] == 0x14) and
                 (script[offset + 25] == OpCodes.OP_EQUALVERIFY) and
                 (script[offset + 26] == OpCodes.OP_CHECKSIG))
-
+    
+    @classmethod
     def is_pay_to_script_hash_locked(script):
         if len(script) < 26 or len(script) > 31:
             return False
