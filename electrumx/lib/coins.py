@@ -44,7 +44,6 @@ from electrumx.lib.script import (_match_ops, Script, ScriptError,
                                   ScriptPubKey, OpCodes)
 import electrumx.lib.tx as lib_tx
 import electrumx.lib.tx_dash as lib_tx_dash
-import electrumx.lib.tx_crown as lib_tx_crown
 import electrumx.lib.tx_axe as lib_tx_axe
 import electrumx.server.block_processor as block_proc
 import electrumx.server.daemon as daemon
@@ -1845,36 +1844,6 @@ class TokenPay(ScryptMixin, Coin):
         "electrum-us.tpay.ai s",
         "electrum-eu.tpay.ai s",
     ]
-    
-class Crown(AuxPowMixin, Coin):
-    NAME = "Crown"
-    SHORTNAME = "CRW"
-    NET = "mainnet"
-    XPUB_VERBYTES = bytes.fromhex("0488b21e")
-    XPRV_VERBYTES = bytes.fromhex("0488ade4")
-    P2SH_VERBYTES = [bytes.fromhex("1c")]
-    GENESIS_HASH = ('0000000085370d5e122f64f4ab19c686'
-                    '14ff3df78c8d13cb814fd7e69a1dc6da')
-    TX_COUNT = 13336629
-    TX_COUNT_HEIGHT = 1268206
-    TX_PER_BLOCK = 10
-    RPC_PORT = 9341
-    REORG_LIMIT = 1000
-    PEERS = [
-        'sgp-crwseed.crowndns.info s t',
-        'blr-crwseed.crowndns.info s t',
-        'sfo-crwseed.crowndns.info s t',
-        'nyc-crwseed.crowndns.info s t',
-        'ams-crwseed.crowndns.info s t',
-        'tor-crwseed.crowndns.info s t',
-        'lon-crwseed.crowndns.info s t',
-        'fra-crwseed.crowndns.info s t',
-    ]
-    SESSIONCLS = DashElectrumX
-    DAEMON = daemon.DashDaemon
-    DESERIALIZER = lib_tx_crown.DeserializerCrown
-
-
     
     
 class Vertcoin(Coin):
