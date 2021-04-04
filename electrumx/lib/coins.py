@@ -1162,7 +1162,8 @@ class Dogecoin(AuxPowMixin, Coin):
     TX_COUNT = 27583427
     TX_COUNT_HEIGHT = 1604979
     TX_PER_BLOCK = 20
-    REORG_LIMIT = 2000
+    REORG_LIMIT = 2000    
+    DESERIALIZER = lib_tx.DeserializerAuxPowSegWit
 
 
 class DogecoinTestnet(Dogecoin):
@@ -2985,6 +2986,7 @@ class SmartCash(Coin):
         '''Given a header return the hash.'''
         return cls.HEADER_HASH(header)
    
+  
 
 class NIX(Coin):
     NAME = "NIX"
