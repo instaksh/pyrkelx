@@ -976,6 +976,27 @@ class BitcoinCashRegtest(BitcoinTestnetMixin, Coin):
     TX_COUNT = 1
     TX_COUNT_HEIGHT = 1
     BLOCK_PROCESSOR = block_proc.LTORBlockProcessor
+    
+class MonetaryUnit(Coin):
+
+    NAME = "MonetaryUnit"
+    SHORTNAME = "MUE"
+    NET = "mainnet"
+    XPUB_VERBYTES = bytes.fromhex("022d2533")
+    XPRV_VERBYTES = bytes.fromhex("0221312b")
+    P2PKH_VERBYTE = bytes.fromhex("10")
+    P2SH_VERBYTES = [bytes.fromhex("4c")]
+    WIF_BYTE = bytes.fromhex("7e")
+    GENESIS_HASH = (
+        '0b58ed450b3819ca54ab0054c4d220ca4f887d21c9e55d2a333173adf76d987f')
+    DAEMON = daemon.MonetaryUnitDaemon
+    TX_COUNT = 569399
+    TX_COUNT_HEIGHT = 2157510
+    TX_PER_BLOCK = 2
+    RPC_PORT = 29947
+    REORG_LIMIT = 1000
+    SESSIONCLS = MonetaryUnitElectrumX
+    PEERS = []
 
 
 class Viacoin(AuxPowMixin, Coin):
