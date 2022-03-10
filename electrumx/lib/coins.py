@@ -997,6 +997,10 @@ class MonetaryUnit(Coin):
     REORG_LIMIT = 1000
     SESSIONCLS = MonetaryUnitElectrumX
     PEERS = []
+    
+    def header_hash(cls, header):
+        '''Given a header return the hash.'''
+        return cls.HEADER_HASH(header)
 
 
 class Viacoin(AuxPowMixin, Coin):
